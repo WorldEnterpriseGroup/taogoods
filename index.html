@@ -7,7 +7,7 @@
 
 	<!-- Stylesheets
 	============================================= -->
-	<link href="https://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,600,700,800,900|Poppins:300,400,500,600,700|Playfair+Display:400,400i,700,700i,900" rel="stylesheet">
+	<link rel="stylesheet" href="css/google-fonts.css" type="text/css" />
 	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 	<link rel="stylesheet" href="style.css" type="text/css" />
 	<link rel="stylesheet" href="css/dark.css" type="text/css" />
@@ -29,7 +29,7 @@
 		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 	<![endif]-->
 
-	<link rel="stylesheet" href="css/colors.php?color=e7272d" type="text/css" />
+	<link rel="preload" href="demos/restaurant/images/slider/1.webp" as="image" fetchpriority="high" />
 
 	<!-- Document Title
 	============================================= -->
@@ -40,9 +40,35 @@
 	.css3-spinner:before,.pizza .slice:after,.pizza .slice:before{content:''}.css3-spinner{height:100vh;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;background:#FFF}.css3-spinner:before{position:absolute;top:50%;left:50%;-webkit-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%);width:15vmin;height:2vmin;background:#DDD;margin-top:17.5vmin;-webkit-filter:blur(10px);filter:blur(10px);border-radius:100%}.pizza{height:20vmin;width:20vmin;-webkit-box-align:center;-ms-flex-align:center;align-items:center;background:0 0;position:relative;-webkit-animation:rotate 13s linear infinite;animation:rotate 13s linear infinite}@-webkit-keyframes rotate{to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes rotate{to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.pizza .slice{z-index:-1;overflow:visible;position:absolute;width:0;height:0;border-style:solid;border-width:10vmin 2.75vmin 0;border-color:#ffdc73 transparent transparent;left:7.5vmin;top:0;-webkit-transform-origin:50% 100%;transform-origin:50% 100%;-webkit-transform:rotate(0);transform:rotate(0);-webkit-animation:loading 1.8125s ease-in-out infinite;animation:loading 1.8125s ease-in-out infinite}@-webkit-keyframes loading{0%,100%,49%{opacity:1}50%,99%{opacity:0}}@keyframes loading{0%,100%,49%{opacity:1}50%,99%{opacity:0}}.pizza .slice:nth-of-type(2n):after{box-shadow:.5vmin 2.5vmin 0 #cc333f}.pizza .slice:nth-of-type(4n):after{box-shadow:.5vmin 2.5vmin 0 #cc333f,1.5vmin 5vmin 0 #cc333f}.pizza .slice:nth-of-type(1){-webkit-transform:rotate(-27.75deg);transform:rotate(-27.75deg);-webkit-animation-delay:-62.5ms;animation-delay:-62.5ms}.pizza .slice:nth-of-type(2){-webkit-transform:rotate(-55.5deg);transform:rotate(-55.5deg);-webkit-animation-delay:-125ms;animation-delay:-125ms}.pizza .slice:nth-of-type(3){-webkit-transform:rotate(-83.25deg);transform:rotate(-83.25deg);-webkit-animation-delay:-.1875s;animation-delay:-.1875s}.pizza .slice:nth-of-type(4){-webkit-transform:rotate(-111deg);transform:rotate(-111deg);-webkit-animation-delay:-.25s;animation-delay:-.25s}.pizza .slice:nth-of-type(5){-webkit-transform:rotate(-138.75deg);transform:rotate(-138.75deg);-webkit-animation-delay:-.3125s;animation-delay:-.3125s}.pizza .slice:nth-of-type(6){-webkit-transform:rotate(-166.5deg);transform:rotate(-166.5deg);-webkit-animation-delay:-375ms;animation-delay:-375ms}.pizza .slice:nth-of-type(7){-webkit-transform:rotate(-194.25deg);transform:rotate(-194.25deg);-webkit-animation-delay:-.4375s;animation-delay:-.4375s}.pizza .slice:nth-of-type(8){-webkit-transform:rotate(-222deg);transform:rotate(-222deg);-webkit-animation-delay:-.5s;animation-delay:-.5s}.pizza .slice:nth-of-type(9){-webkit-transform:rotate(-249.75deg);transform:rotate(-249.75deg);-webkit-animation-delay:-.5625s;animation-delay:-.5625s}.pizza .slice:nth-of-type(10){-webkit-transform:rotate(-277.5deg);transform:rotate(-277.5deg);-webkit-animation-delay:-625ms;animation-delay:-625ms}.pizza .slice:nth-of-type(11){-webkit-transform:rotate(-305.25deg);transform:rotate(-305.25deg);-webkit-animation-delay:-.6875s;animation-delay:-.6875s}.pizza .slice:nth-of-type(12){-webkit-transform:rotate(-333deg);transform:rotate(-333deg);-webkit-animation-delay:-.75s;animation-delay:-.75s}.pizza .slice:before{position:absolute;height:1.5vmin;width:6vmin;background:#bbb083;top:-10.5vmin;left:-3vmin;border-radius:100vmin 100vmin .5vmin .5vmin/50vmin}.pizza .slice:after{border-radius:100%;position:absolute;width:1.25vmin;height:1.25vmin;background:#cc333f;left:-1vmin;top:-7vmin;z-index:2}
 	</style>
 
+	<style>
+	/* The page used to hide #wrapper (opacity 0 behind the animsition pizza spinner) until
+	   window.load, because functions.js sized the full-screen slider and positioned its
+	   captions only after the first paint. body.no-transition is Canvas' own switch for
+	   "no page transition"; the rules below give the first paint the same geometry the
+	   script computes, so nothing moves when it runs. */
+	img[width][height] { height: auto; }
+
+	#slider.full-screen:not([style*="height"]),
+	#slider.full-screen:not([style*="height"]) .swiper-slide {
+		height: calc(100vh - 101px);
+		height: calc(100dvh - 101px);
+	}
+
+	@media (min-width: 992px) {
+		#slider.full-screen:not([style*="height"]),
+		#slider.full-screen:not([style*="height"]) .swiper-slide {
+			height: 100vh;
+			height: 100dvh;
+		}
+	}
+
+	/* captions fade in once the slider has positioned them (they were never visible before) */
+	#slider .slider-caption:not([style*="top"]) { opacity: 0; }
+	</style>
+
 </head>
 
-<body class="stretched sticky-footer" data-loader-html="<span class='pizza'> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> </span>">
+<body class="stretched sticky-footer no-transition" data-loader-html="<span class='pizza'> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> <span class='slice'></span> </span>">
 
 	<!-- Document Wrapper
 	============================================= -->
@@ -96,7 +122,7 @@
 			<div class="slider-parallax-inner">
 				<div class="swiper-container swiper-parent">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide" style="background-image: url('demos/restaurant/images/slider/1.jpg'); background-position: center center;">
+						<div class="swiper-slide" style="background-image: url('demos/restaurant/images/slider/1.webp'); background-position: center center;">
 							<div class="container dark clearfix">
 								<div class="slider-caption">
 									<h2 class="font-secondary ls0 t400 nott" data-caption-animate="fadeIn">Taste of Tao.</h2>
@@ -110,7 +136,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="swiper-slide" style="background-image: url('demos/restaurant/images/slider/3.jpg'); background-position: center center;">
+						<div class="swiper-slide" style="background-image: url('demos/restaurant/images/slider/3.webp'); background-position: center center;">
 							<div class="container dark clearfix">
 								<div class="slider-caption slider-caption-center" style="margin-top: -30px;">
 									<img data-caption-animate="fadeIn" src="demos/restaurant/images/slider-logo.png" alt="" style="width: 120px; margin-bottom: 10px;">
@@ -124,7 +150,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="swiper-slide" style="background-image: url('demos/restaurant/images/slider/2.jpg'); background-position: center bottom;">
+						<div class="swiper-slide" style="background-image: url('demos/restaurant/images/slider/2.webp'); background-position: center bottom;">
 							<div class="container dark clearfix">
 								<div class="slider-caption slider-caption-right">
 									<h2 class="font-secondary ls0 t400 nott" data-caption-animate="fadeIn">Hello &amp; Welcome.</h2>
@@ -147,7 +173,7 @@
 
 			<div class="content-wrap">
 
-				<div class="section nomargin clearfix" style="padding: 40px 0; background: url('demos/restaurant/images/sections/4.jpg') center center no-repeat; background-size: 100% auto">
+				<div class="section nomargin clearfix" style="padding: 40px 0; background: url('demos/restaurant/images/sections/4.webp') center center no-repeat; background-size: 100% auto">
 					<div class="container clearfix">
 
 						<div class="heading-block nobottomborder bottommargin-sm">
@@ -191,7 +217,7 @@
 
 				<div class="clear"></div>
 
-				<div class="section nobottommargin" style="background: #FFF url('demos/restaurant/images/sections/5.jpg') no-repeat top left / cover; padding: 60px 0; border-top: 1px solid #EEE;">
+				<div class="section nobottommargin" style="background: #FFF url('demos/restaurant/images/sections/5.webp') no-repeat top left / cover; padding: 60px 0; border-top: 1px solid #EEE;">
 					<div class="container clearfix">
 						<div class="heading-block center nobottommargin nobottomborder">
 							<span class="font-primary" style="font-size: 16px; color: #888">Tasty &amp; Healthy</span>
@@ -214,7 +240,7 @@
 								<div id="food-menu-carousel" class="menu-carousel owl-carousel image-carousel food-menu-carousel custom-js" data-animate-in="fadeIn" data-margin="0" data-nav="false" data-pagi="false" data-items="1">
 
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/food/1.jpg" alt="Image 1">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/food/1.webp" alt="Image 1" width="600" height="294" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Multigrain Toast.</h3>
@@ -226,7 +252,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/food/2.jpg" alt="Image 2">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/food/2.webp" alt="Image 2" width="800" height="422" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Prawn Mussels Plate.</h3>
@@ -238,7 +264,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/food/3.jpg" alt="Image 3">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/food/3.webp" alt="Image 3" width="600" height="294" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Black Jumbo Burger.</h3>
@@ -250,7 +276,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/food/4.jpg" alt="Image 4">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/food/4.webp" alt="Image 4" width="600" height="252" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Fried Chicken.</h3>
@@ -262,7 +288,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/food/5.jpg" alt="Image 1">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/food/5.webp" alt="Image 1" width="600" height="361" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Smoothie Fruit Bowl.</h3>
@@ -274,7 +300,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/food/6.jpg" alt="Image 2">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/food/6.webp" alt="Image 2" width="900" height="498" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Margarita Pizza.</h3>
@@ -286,7 +312,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/food/7.jpg" alt="Image 3">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/food/7.webp" alt="Image 3" width="500" height="313" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Macaroni Pasta.</h3>
@@ -297,7 +323,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/food/8.jpg" alt="Image 4">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/food/8.webp" alt="Image 4" width="600" height="247" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Chicken with Fries.</h3>
@@ -309,7 +335,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/food/9.jpg" alt="Image 4">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/food/9.webp" alt="Image 4" width="700" height="292" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Chinese Noodle.</h3>
@@ -332,7 +358,7 @@
 						<div class="col_one_third nobottommargin">
 							<div class="feature-box media-box">
 								<div class="fbox-media">
-									<a href="#" class="image_fade"><img style="border-radius: 2px;" src="demos/restaurant/images/featured/1.jpg" alt="Why choose Us?"></a>
+									<a href="#" class="image_fade"><img style="border-radius: 2px;" src="demos/restaurant/images/featured/1.webp" alt="Why choose Us?" width="800" height="642" loading="lazy" decoding="async"></a>
 								</div>
 								<div class="fbox-desc">
 									<h3>Beautiful Location.<span class="subtitle ls1" style="color:#BBB">Food Tastes Better when you are in Good Location.</span></h3>
@@ -344,7 +370,7 @@
 						<div class="col_one_third nobottommargin">
 							<div class="feature-box media-box">
 								<div class="fbox-media">
-									<a href="#" class="image_fade"><img style="border-radius: 2px;" src="demos/restaurant/images/featured/2.jpg" alt="Effective Planning"></a>
+									<a href="#" class="image_fade"><img style="border-radius: 2px;" src="demos/restaurant/images/featured/2.webp" alt="Effective Planning" width="800" height="642" loading="lazy" decoding="async"></a>
 								</div>
 								<div class="fbox-desc">
 									<h3>Feel the Taste.<span class="subtitle ls1" style="color:#BBB">Nothing Brings people together like Good Food.</span></h3>
@@ -356,7 +382,7 @@
 						<div class="col_one_third nobottommargin col_last">
 							<div class="feature-box media-box">
 								<div class="fbox-media">
-									<a href="#" class="image_fade"><img style="border-radius: 2px;" src="demos/restaurant/images/featured/3.jpg" alt="Why choose Us?"></a>
+									<a href="#" class="image_fade"><img style="border-radius: 2px;" src="demos/restaurant/images/featured/3.webp" alt="Why choose Us?" width="800" height="642" loading="lazy" decoding="async"></a>
 								</div>
 								<div class="fbox-desc">
 									<h3>Delicious Desserts.<span class="subtitle ls1" style="color:#BBB">The Best things in life are Sweet.</span></h3>
@@ -370,7 +396,7 @@
 
 				<div class="clear"></div>
 
-				<div class="section nobottommargin" style="background: #fee749 url('demos/restaurant/images/sections/4.jpg') no-repeat center right; background-size: cover; padding: 60px 0;">
+				<div class="section nobottommargin" style="background: #fee749 url('demos/restaurant/images/sections/4.webp') no-repeat center right; background-size: cover; padding: 60px 0;">
 					<div class="heading-block center nobottommargin nobottomborder">
 						<span class="font-primary ls1" style="font-size: 14px; color: #AAA">Sweet &amp; Sexy</span>
 						<h3 class="nott font-secondary ls0" style="font-size: 60px;line-height: 1.3;">Our Dessert Menu</h3>
@@ -385,7 +411,7 @@
 								<div id="dessert-menu-carousel" class="menu-carousel owl-carousel image-carousel custom-js" data-animate-in="fadeIn" data-margin="0" data-nav="false" data-pagi="false" data-items="1">
 
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/1.jpg" alt="Image 1">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/1.webp" alt="Image 1" width="600" height="381" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Chocolate Cupcakes.</h3>
@@ -397,7 +423,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/2.jpg" alt="Image 2">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/2.webp" alt="Image 2" width="600" height="344" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Caramel Cake.</h3>
@@ -409,7 +435,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/3.jpg" alt="Image 3">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/3.webp" alt="Image 3" width="600" height="442" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Choco Strawberry Waffle.</h3>
@@ -421,7 +447,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/4.jpg" alt="Image 4">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/4.webp" alt="Image 4" width="600" height="400" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Tuffle Cake.</h3>
@@ -432,7 +458,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/5.jpg" alt="Image 1">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/5.webp" alt="Image 1" width="600" height="328" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Chocolate Croissant.</h3>
@@ -444,7 +470,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/6.jpg" alt="Image 2">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/6.webp" alt="Image 2" width="600" height="394" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Delicious Cookies.</h3>
@@ -455,7 +481,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/7.jpg" alt="Image 3">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/7.webp" alt="Image 3" width="600" height="308" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Strawberry Pastry.</h3>
@@ -466,7 +492,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/8.jpg" alt="Image 4">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/8.webp" alt="Image 4" width="600" height="365" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Fruity Bowl.</h3>
@@ -478,7 +504,7 @@
 										</div>
 									</div>
 									<div class="oc-item">
-										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/9.jpg" alt="Image 4">
+										<img class="topmargin-sm" src="demos/restaurant/images/items/desserts/9.webp" alt="Image 4" width="600" height="309" loading="lazy" decoding="async">
 										<div class="food-content clearfix">
 											<div class="heading-block nobottomborder nobottommargin">
 												<h3 class="font-secondary nott">Jelly Cake.</h3>
@@ -507,7 +533,7 @@
 				<div class="clear"></div>
 
 				<div class="section nobg">
-					<div class="d-none d-lg-block" style="background: #FFF url('demos/restaurant/images/sections/3.jpg') no-repeat center center / cover; height: 100%;position: absolute; top: 0; left: 0; width: 100%"></div>
+					<div class="d-none d-lg-block" style="background: #FFF url('demos/restaurant/images/sections/3.webp') no-repeat center center / cover; height: 100%;position: absolute; top: 0; left: 0; width: 100%"></div>
 					<div class="container clearfix">
 
 						<div class="heading-block nobottomborder">
@@ -515,10 +541,10 @@
 							<h3 class="nott font-secondary ls0" style="font-size: 60px; line-height: 1.3;">What We Do</h3>
 						</div>
 						<div class="row clearfix">
-							<div class="col-lg-6 col-md-6 col-12"><img src="demos/restaurant/images/sections/1.jpg" alt=""></div>
+							<div class="col-lg-6 col-md-6 col-12"><img src="demos/restaurant/images/sections/1.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
 							<div class="col-lg-4 col-md-6 col-12">
 								<a class="button button-border button-large button-black button-dark button-rounded nott ls0 font-primary service-button">Our Service</a>
-								<img src="demos/restaurant/images/sections/2.jpg" alt="" class="d-none d-md-block" style="margin: 0 0 0 -80px;">
+								<img src="demos/restaurant/images/sections/2.webp" alt="" class="d-none d-md-block" style="margin: 0 0 0 -80px;" width="800" height="533" loading="lazy" decoding="async">
 							</div>
 						</div>
 
@@ -538,7 +564,7 @@
 							<div class="col-lg-3 col-md-6">
 								<div class="team">
 									<div class="team-image">
-										<img src="demos/restaurant/images/chefs/1.jpg" alt="John Doe">
+										<img src="demos/restaurant/images/chefs/1.webp" alt="John Doe" width="600" height="490" loading="lazy" decoding="async">
 									</div>
 									<div class="team-desc">
 										<div class="team-title">
@@ -553,7 +579,7 @@
 							<div class="col-lg-3 col-md-6">
 								<div class="team">
 									<div class="team-image">
-										<img src="demos/restaurant/images/chefs/2.jpg" alt="Josh Clark">
+										<img src="demos/restaurant/images/chefs/2.webp" alt="Josh Clark" width="600" height="490" loading="lazy" decoding="async">
 									</div>
 									<div class="team-desc">
 										<div class="team-title">
@@ -568,7 +594,7 @@
 							<div class="col-lg-3 col-md-6">
 								<div class="team">
 									<div class="team-image">
-										<img src="demos/restaurant/images/chefs/3.jpg" alt="Mary Jane">
+										<img src="demos/restaurant/images/chefs/3.webp" alt="Mary Jane" width="600" height="490" loading="lazy" decoding="async">
 									</div>
 									<div class="team-desc">
 										<div class="team-title">
@@ -583,7 +609,7 @@
 							<div class="col-lg-3 col-md-6">
 								<div class="team">
 									<div class="team-image">
-										<img src="demos/restaurant/images/chefs/4.jpg" alt="Nix Maxwell">
+										<img src="demos/restaurant/images/chefs/4.webp" alt="Nix Maxwell" width="600" height="490" loading="lazy" decoding="async">
 									</div>
 									<div class="team-desc">
 										<div class="team-title">
@@ -601,7 +627,7 @@
 
 				<div class="clear"></div>
 
-				<div style="background: #FFF url('demos/restaurant/images/sections/7.jpg') no-repeat top right; background-size: 100% auto; padding-top: 50px">
+				<div style="background: #FFF url('demos/restaurant/images/sections/7.webp') no-repeat top right; background-size: 100% auto; padding-top: 50px">
 					<div class="container clearfix">
 
 						<div class="heading-block center nobottomborder">
@@ -615,7 +641,7 @@
 								<div class="ipost clearfix">
 									<div class="entry clearfix">
 										<div class="entry-image nobottommargin">
-											<a href="demos/restaurant/images/blogs/1.jpg" data-lightbox="image"><img class="image_fade" src="demos/restaurant/images/blogs/1.jpg" alt="Image 1"></a>
+											<a href="demos/restaurant/images/blogs/1.webp" data-lightbox="image"><img class="image_fade" src="demos/restaurant/images/blogs/1.webp" alt="Image 1" width="500" height="333" loading="lazy" decoding="async"></a>
 										</div>
 										<div class="entry-title">
 											<ul class="entry-meta clearfix">
@@ -633,7 +659,7 @@
 								<div class="ipost clearfix">
 									<div class="entry clearfix">
 										<div class="entry-image nobottommargin">
-											<a href="demos/restaurant/images/blogs/2.jpg" data-lightbox="image"><img class="image_fade" src="demos/restaurant/images/blogs/2.jpg" alt="Image 2"></a>
+											<a href="demos/restaurant/images/blogs/2.webp" data-lightbox="image"><img class="image_fade" src="demos/restaurant/images/blogs/2.webp" alt="Image 2" width="500" height="333" loading="lazy" decoding="async"></a>
 										</div>
 										<div class="entry-title">
 											<ul class="entry-meta clearfix">
@@ -651,7 +677,7 @@
 								<div class="ipost clearfix">
 									<div class="entry clearfix">
 										<div class="entry-image nobottommargin">
-											<a href="demos/restaurant/images/blogs/3.jpg" data-lightbox="image"><img class="image_fade" src="demos/restaurant/images/blogs/3.jpg" alt="Image 3"></a>
+											<a href="demos/restaurant/images/blogs/3.webp" data-lightbox="image"><img class="image_fade" src="demos/restaurant/images/blogs/3.webp" alt="Image 3" width="500" height="333" loading="lazy" decoding="async"></a>
 										</div>
 										<div class="entry-title">
 											<ul class="entry-meta clearfix">
@@ -729,7 +755,7 @@
 
 		<!-- Footer
 		============================================= -->
-		<footer id="footer" class="dark" style="background: url('demos/restaurant/images/footer-bg.jpg')  repeat center center / cover; background-size: auto 100%;; padding: 50px 0 22px">
+		<footer id="footer" class="dark" style="background: url('demos/restaurant/images/footer-bg.webp')  repeat center center / cover; background-size: auto 100%;; padding: 50px 0 22px">
 
 			<!-- Copyrights
 			============================================= -->
@@ -789,6 +815,14 @@
 				mouseDrag: false,
 				dotsContainer: '#item-thumb1',
 			});
+
+			// functions.js sizes the menu rows (common height, vertical middle) and places the
+			// slider captions in its window.load handler. With nothing left to wait for, load can
+			// fire before this ready handler has built the carousels (jQuery runs ready handlers
+			// asynchronously), so repeat that sizing now that they exist. load repeats it again.
+			SEMICOLON.initialize.maxHeight();
+			SEMICOLON.initialize.verticalMiddle();
+			SEMICOLON.slider.captionPosition();
 		});
 
 	</script>
